@@ -4,6 +4,8 @@ A To-Do list app powered by Skynet MySky
 
 To-Do data is saved on the decentralized Sia network.
 
+Deployed [Skapp](https://1003ufmj0svu0omeebgcdndqtk0kseemp1jb5ohspnhudiifuo3ncig.siasky.net/#/)
+
 ### Made with:
 
 - VueJS
