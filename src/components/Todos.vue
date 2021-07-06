@@ -1,31 +1,34 @@
 <template>
   <div class="home">
     <div v-if="todos.length > 0">
-      <h1>Todos</h1>
-      <p>
-        Completed:
-        {{
-          todos.filter((todo) => {
-            return todo.done;
-          }).length
-        }}
-      </p>
+      <v-list dark subheader :disabled="loading">
+        <v-list-item
+          v-for="(todo, i) in todos"
+          :key="i"
+          :class="{ done: todo.done }"
+        >
+          <template>
+            <v-list-item-action>
+              <v-checkbox
+                :value="todo.done"
+                :input-value="todo.done"
+                color="teal"
+                @click="toggleTodo(i)"
+              ></v-checkbox>
+            </v-list-item-action>
 
-      <ul>
-        <li v-for="(todo, i) in todos" :key="i" :class="{ done: todo.done }">
-          <div>
-            <input
-              type="checkbox"
-              :checked="todo.done"
-              @click="toggleTodo(i)"
-            />
+            <v-list-item-content>
+              <v-list-item-title v-bind:class="{ done: todo.done }">{{
+                todo.content
+              }}</v-list-item-title>
+            </v-list-item-content>
 
-            {{ todo.content }}
-
-            <button @click="deleteTodo(i)">x</button>
-          </div>
-        </li>
-      </ul>
+            <v-list-item-avatar>
+              <v-btn icon @click="deleteTodo(i)">🗑️</v-btn>
+            </v-list-item-avatar>
+          </template>
+        </v-list-item>
+      </v-list>
     </div>
 
     <div v-else>
@@ -37,7 +40,7 @@
 <script>
 export default {
   name: "TodoList",
-  props: ["todos"],
+  props: ["todos", "loading"],
   methods: {
     deleteTodo(todo) {
       this.$emit("delete-todo", todo);
@@ -48,3 +51,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+</style>
